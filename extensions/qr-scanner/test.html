@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>QR 框选扫描器 - 测试页面</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #1e3a8a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 12px;
+    }
+    .instructions {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .qr-grid {
+      display: flex;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    .qr-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      width: 240px;
+    }
+    .qr-card img {
+      width: 180px;
+      height: 180px;
+      display: block;
+      margin: 0 auto 12px;
+      border: 1px solid #f1f5f9;
+      border-radius: 6px;
+    }
+    .qr-card h3 {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    .qr-card p {
+      font-size: 13px;
+      color: #64748b;
+      margin: 0;
+    }
+    kbd {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <h1>QR 框选扫描器 - 测试页面</h1>
+
+  <div class="instructions">
+    <p><strong>测试方式：</strong></p>
+    <ol>
+      <li>点击浏览器右上角的扩展图标，或者按下快捷键 <kbd>Alt + Q</kbd>（Mac 上也是 <kbd>Option + Q</kbd>）。</li>
+      <li>屏幕会变暗，提示<strong>“按住鼠标左键拖拽框选二维码”</strong>。</li>
+      <li>鼠标拖拽框住下方的任一二维码，松开鼠标即可立即识别出网址！</li>
+    </ol>
+  </div>
+
+  <div class="qr-grid">
+    <div class="qr-card">
+      <img src="sample_github.png" alt="GitHub QR Code">
+      <h3>GitHub 链接</h3>
+      <p>内容：https://github.com</p>
+    </div>
+
+    <div class="qr-card">
+      <img src="sample_google.png" alt="Google QR Code">
+      <h3>Google 链接</h3>
+      <p>内容：https://www.google.com</p>
+    </div>
+  </div>
+</body>
+</html>

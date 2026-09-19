@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "QR 框选扫描器",
+  "version": "1.0.1",
+  "description": "点击扩展图标即可在当前网页上鼠标拖拽框选，快速识别二维码并获取访问地址。",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "点击框选识别二维码 (快捷键: Alt+Q)"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Q",
+        "mac": "Alt+Q"
+      },
+      "description": "启动二维码框选"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

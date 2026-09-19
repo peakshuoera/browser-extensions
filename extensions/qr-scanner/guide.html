@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>QR 框选扫描器 - 使用指南与常见问题</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px 80px;
+    }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .header h1 {
+      font-size: 26px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .header p {
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-size: 15px;
+    }
+
+    .notice-card {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .notice-card h2 {
+      font-size: 17px;
+      color: #9a3412;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .notice-card p {
+      color: #7c2d12;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .notice-card ol {
+      color: #7c2d12;
+      font-size: 14px;
+      padding-left: 20px;
+    }
+    .notice-card li {
+      margin-bottom: 6px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    }
+    .card h3 {
+      font-size: 18px;
+      color: #0f172a;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: #eff6ff;
+      color: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .step-content strong {
+      color: #0f172a;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .step-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    kbd {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 12px;
+      font-family: inherit;
+      color: #334155;
+    }
+
+    .badge-tag {
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .qr-demo-area {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .qr-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      background: #fafafa;
+      width: 220px;
+    }
+    .qr-item img {
+      width: 160px;
+      height: 160px;
+      display: block;
+      margin: 0 auto 10px;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .qr-item h4 {
+      font-size: 14px;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .qr-item p {
+      font-size: 12px;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    .interactive-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: background 0.15s;
+    }
+    .interactive-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔍 QR 框选扫描器 - 使用指南</h1>
+      <p>解决扩展点击没反应的问题，以及正确使用步骤说明</p>
+    </div>
+
+    <div class="notice-card" id="notice-box">
+      <h2>⚠️ 为什么点击图标或按快捷键没有反应？</h2>
+      <p>在 Chromium 内核（Chrome、Edge 等）浏览器中，以下两种常见情况会导致扩展<strong>被浏览器安全策略禁止运行</strong>：</p>
+      <ol>
+        <li><strong>在内部受限页面上点击了图标：</strong>如 <code>chrome://extensions</code>（扩展管理页）、新标签页（<code>chrome://newtab</code>）或应用商店。<strong>任何扩展都无法在这些内置页面上运行脚本或截屏。</strong></li>
+        <li><strong>在本地文件 (<code>file://</code>) 上使用但未开启权限：</strong>浏览器默认不允许扩展读取本地 HTML 文件。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>🚀 正确测试方法（推荐）</h3>
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>打开任意普通网页</strong>
+          <p>请打开任意常规网站（例如 <a href="https://www.baidu.com" target="_blank">百度</a>、<a href="https://github.com" target="_blank">GitHub</a>、B站、知乎或任意网页）。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>点击右上角扩展栏图标（或快捷键 <kbd>Alt + Q</kbd>）</strong>
+          <p>此时整个屏幕会变暗，顶部出现提示「按住鼠标左键拖拽框选二维码」。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>鼠标拖拽框住二维码，松开即可识别</strong>
+          <p>松开鼠标立即弹出二维码解码内容，提供【打开链接】和【复制链接】操作。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📁 如果你想在本地 HTML 文件上测试</h3>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+        只需在浏览器设置中开启一次权限即可：
+      </p>
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>进入扩展管理页</strong>
+          <p>在地址栏输入 <code>chrome://extensions</code> 并回车。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>找到「QR 框选扫描器」，点击【详细信息】</strong>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>开启【允许访问文件网址】(Allow access to file URLs) 开关</strong>
+          <p>开启后，直接双击打开本地的 <code>test.html</code>，点击扩展图标即可正常框选扫描！</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="text-align: center;">
+      <h3>🎯 页面内即时测试</h3>
+      <p style="font-size: 14px; color: var(--text-muted);">下方为你准备了两个测试二维码，你也可以直接点击下方按钮体验框选效果：</p>
+      
+      <div class="qr-demo-area">
+        <div class="qr-item">
+          <img src="sample_github.png" alt="GitHub">
+          <h4>GitHub 官方网址</h4>
+          <p>https://github.com</p>
+        </div>
+        <div class="qr-item">
+          <img src="sample_google.png" alt="Google">
+          <h4>Google 官方网址</h4>
+          <p>https://www.google.com</p>
+        </div>
+      </div>
+
+      <button class="interactive-btn" id="manual-scan-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg>
+        在当前页面启动模拟框选测试
+      </button>
+    </div>
+  </div>
+
+  <script src="jsqr.min.js"></script>
+  <script src="content.js"></script>
+  <script>
+    // 在 guide 页面内点击按钮直接体验框选交互
+    document.getElementById('manual-scan-btn').onclick = async () => {
+      // 在页面内部渲染 canvas 截屏模拟框选
+      const btn = document.getElementById('manual-scan-btn');
+      btn.textContent = '请在屏幕上拖拽框选下方的二维码...';
+
+      // 截取当前 DOM 或者生成画面测试
+      // 利用 html2canvas 逻辑或简单提示
+      if (typeof window.__startQrScanner === 'function') {
+        // 创建一个包含当前画面大小的测试 canvas
+        const canvas = document.createElement('canvas');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // 绘制图片到 canvas 上对应位置
+        const imgs = document.querySelectorAll('.qr-item img');
+        imgs.forEach(img => {
+          const rect = img.getBoundingClientRect();
+          try {
+            ctx.drawImage(img, rect.left, rect.top, rect.width, rect.height);
+          } catch (e) {}
+        });
+
+        window.__startQrScanner(canvas.toDataURL('image/png'));
+      }
+    };
+  </script>
+</body>
+</html>
