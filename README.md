@@ -19,7 +19,7 @@
 
 1. **下载或克隆本仓库**：
    ```bash
-   git clone https://github.com/你的用户名/你的仓库名.git
+   git clone https://github.com/peakshuoera/browser-extensions.git
    ```
 2. **打开浏览器的扩展管理页**：
    - **Google Chrome**: 访问 `chrome://extensions/`
